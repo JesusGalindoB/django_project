@@ -9,16 +9,15 @@ from django.contrib.auth.models import User
 
 from .forms import RegisterForm
 
+from products.models import Product
+
 def index(request):
+    products = Product.objects.all().order_by('-id')
+
     return render( request, 'index.html', {
         'message': 'product list',
         'title': 'products',
-        'products': [
-            {'title':'playera', 'price': 5, 'stock':True},
-            {'title':'camisa', 'price': 7, 'stock':True},
-            {'title':'Mochila', 'price': 20, 'stock':False},
-            {'title':'Laptop', 'price': 500, 'stock':True},
-        ]
+        'products': products
     })
 
 def login_view(request):

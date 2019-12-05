@@ -1,3 +1,6 @@
+{% url 'login' as login %}
+{% url 'register' as register %}
+
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
   <a href="#" class="navbar-brand">Store</a>  
 
@@ -6,19 +9,30 @@
   </button>  
 
   <div id="navb" class="navbar-collapse collapse hide">  
-
     <ul class="nav navbar-nav ml-auto">
+      
+    {% if request.user.is_authenticated %}
       <li class="navbar-item"> 
-        <a href="#" class="nav-link">Login</a>
-      </li>
-    
-      <li class="navbar-item"> 
-        <a href="#" class="nav-link">registry</a>
+        <a href="{%  url 'logout' %}" class="nav-link">
+          <span class="fas fa-sign-in-alt"></span>
+        Logout</a>
       </li>
 
-      <li class="navbar-item"> 
-        <a href="#" class="nav-link">Logout</a>
-      </li>
+    {% else %}
+      
+        <li class="navbar-item {% if request.path == login %} active {% endif %}"> 
+          <a href="{{ login }}" class="nav-link">
+            <span class="fas fa-user"></span>
+          Login</a>
+        </li>
+      
+        <li class="navbar-item {% if request.path == register %} active {% endif %}"> 
+          <a href="{{ register }}" class="nav-link">
+            <span class="fas fa-user-plus"></span>
+          registry</a>
+        </li>
+    {% endif %}
+
     </ul>  
 
   </div>

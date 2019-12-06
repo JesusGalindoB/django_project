@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'users',
+    'carts',
     'category',
     'products',
     'django.contrib.admin',
@@ -53,6 +54,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'store.urls'
+
+AUTH_USER_MODEL = 'users.User'
 
 TEMPLATES = [
     {

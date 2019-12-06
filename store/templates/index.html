@@ -2,14 +2,10 @@
 
 {% block content %}
   <div class="col">
-    <h1>{{ message }}</h1>  
-    <ul class="list-group">
-      {% for product in product_list %}
-        <li class="list-group-item">
-          {{ product.title }}  
-            <span class="text-success">${{ product.price }}</span>
-        </li>
-      {% endfor %}
-    </ul>
+    <h4 class="text-center">{{ message }}</h4>
+    {% include 'products/snippets/search.html' %}
+
+    {% include 'products/snippets/list.html' %}
+    
   </div>
 {% endblock %}

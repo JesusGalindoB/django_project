@@ -15,7 +15,8 @@ urlpatterns = [
     path('users/logout', views.logout_view, name='logout'),
     path('users/registry', views.register, name='register'),
     path('admin/', admin.site.urls),
-    path('products/', include('products.urls'))
+    path('products/', include('products.urls')),
+    path('cart/', include('carts.urls'))
 ]
 
 if settings.DEBUG:

@@ -6,7 +6,7 @@ def get_or_create_cart(request):
     cart = Cart.objects.filter(cart_id=cart_id).first()
 
     if cart is None:
-        Cart.objects.create(user=user)
+        cart = Cart.objects.create(user=user)
 
     if user and cart.user is None:
         cart.user = user

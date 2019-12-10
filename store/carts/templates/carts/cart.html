@@ -37,7 +37,16 @@
     </table>
   </div>
   <div class="col">
-
+    <div class="card"> 
+      <div class="card-body">
+        <div class="font-weight-body">
+          Subtotal : <span class="text-danger">{{ cart.subtotal | price_format }}</span> 
+        </div>
+        <div class="mt-2">
+          <a href="#" class="btn btn-warning">Proceed to payment</a>
+        </div>
+      </div>
+    </div>
   </div>
   {% else %}
     <div class="col">

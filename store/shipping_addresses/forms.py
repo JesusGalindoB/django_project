@@ -11,7 +11,6 @@ class ShippingAddressForm(ModelForm):
         labels = {
             'line1': 'Street 1',
             'line2': 'Street 2',
-            
         }
 
     def __init__(self, *args, **kwargs):

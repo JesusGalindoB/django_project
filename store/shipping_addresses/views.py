@@ -11,3 +11,8 @@ class ShippingAddressListView(ListView):
 
     def get_queryset(self):
         return ShippingAdrress.objects.filter(user=self.request.user).order_by('-default')
+
+def create(request):
+    return render(request, 'shipping_addresses/create.html', {
+        
+    })

@@ -3,14 +3,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 
-
-
 from django.shortcuts import render
 from django.shortcuts import reverse
 from django.shortcuts import redirect
 
+from django.urls import reverse_lazy
+
 from django.views.generic import ListView
 from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView
 
 from .forms import ShippingAddressForm
 
@@ -35,6 +36,27 @@ class ShippingAddressUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateV
     def get_success_url(self):
         return reverse('shipping_addresses:shipping_addresses')
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.id != self.get_object().user_id:
+            return redirect('carts:cart')
+
+        return super(ShippingAddressUpdateView, self).dispatch(request, *args, **kwargs)
+
+class ShippingAddressDeleteVew(LoginRequiredMixin, DeleteView):
+    login_url = 'login'
+    model = ShippingAdrress
+    template_name = 'shipping_addresses/delete.html'
+    success_url = reverse_lazy('shipping_addresses:shipping_addresses')
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.get_object().default:
+            return redirect('shipping_addresses:shipping_addresses')
+
+        if request.user.id != self.get_object().user_id:
+            return redirect('carts:cart')
+        
+        return super(ShippingAddressDeleteVew, self).dispatch(request, *args, **kwargs)
+        
 @login_required(login_url='login')
 def create(request):
     form = ShippingAddressForm(request.POST or None)

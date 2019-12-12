@@ -76,6 +76,7 @@ def create(request):
         'form': form 
     })
 
+@login_required(login_url='login')
 def default(request, pk):
     shipping_address = get_object_or_404(ShippingAdrress, pk=pk)
 

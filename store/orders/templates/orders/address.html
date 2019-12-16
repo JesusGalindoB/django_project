@@ -6,16 +6,19 @@
 
 {% block content %}
     <div class="col">
-        {% if shipping _address%}
+        {% if shipping_address %}
           <div class="h3">
             Pick up the order to the delivery point
+          </div>
+          <div class="">
+            {% include 'shipping_addresses/snippets/shipping_address.html' %}
           </div>
         {% else %}
           <div class="h3">
             Register your shipping address
           </div>
           <div class="">
-              <a href="{% url 'shipping_addresses:create' %}">New shipping address</a>
+            <a href="{% url 'shipping_addresses:create' %}">New shipping address</a>
           </div>
         {% endif %}
     </div>

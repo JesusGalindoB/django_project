@@ -124,7 +124,7 @@ USE_TZ = True
 EMAIL_HOST = 'smtp.googlemail.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'jesbag.17@gmail.com'
-EMAIL_HOST_PASSWORD = 'password' 
+EMAIL_HOST_PASSWORD = 'J3sus200A' 
 EMAIL_USE_TLS = True 
 
 # Static files (CSS, JavaScript, Images)

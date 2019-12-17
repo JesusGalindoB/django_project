@@ -16,6 +16,17 @@ from .mails import Mail
 from shipping_addresses.models import ShippingAdrress
 
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from django.db.models.query import EmptyQuerySet
+from django.views.generic.list import ListView
+
+class OrderListView(LoginRequiredMixin, ListView):
+    login_url = 'login'
+    template_name = 'orders/orders.html'
+
+    def get_queryset(self):
+        return self.request.user.orders_completed()
 
 @login_required(login_url='login')
 def order(request):

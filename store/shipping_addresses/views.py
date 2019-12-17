@@ -1,4 +1,7 @@
 from django.contrib import messages
+
+from django.http import HttpResponseRedirect
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
@@ -17,6 +20,9 @@ from django.views.generic.edit import DeleteView
 from .forms import ShippingAddressForm
 
 from .models import ShippingAdrress
+
+from carts.utils import get_or_create_cart
+from orders.utils import get_or_create_order
 
 
 class ShippingAddressListView( LoginRequiredMixin, ListView):
@@ -55,6 +61,9 @@ class ShippingAddressDeleteVew(LoginRequiredMixin, DeleteView):
 
         if request.user.id != self.get_object().user_id:
             return redirect('carts:cart')
+
+        if self.get_object().has_orders():
+            return redirect('shipping_addresses:shipping_addresses')
         
         return super(ShippingAddressDeleteVew, self).dispatch(request, *args, **kwargs)
         
@@ -68,6 +77,14 @@ def create(request):
         shipping_address.default = not request.user.has_shipping_address()
 
         shipping_address.save()
+
+        if request.GET.get('next'):
+            if request.GET['next'] == reverse('orders:address'):
+                cart = get_or_create_cart(request)
+                order = get_or_create_order(cart, request)
+
+                order.update_shipping_address(shipping_address)
+                return HttpResponseRedirect(request.GET['next'])
 
         messages.success(request, 'address created successfully')
         return redirect('shipping_addresses:shipping_addresses')

@@ -18,6 +18,13 @@ class User(AbstractUser):
     def orders_completed(self):
         return self.order_set.filter(status=OrderStatus.COMPLETED).order_by('-id')
 
+    def has_shipping_addresses(self):
+        return self.shippingadrress_set.exists()
+
+    @property
+    def addresses(self):
+        return self.shippingadrress_set.all()
+
 class Customer(User):
     class Meta:
         proxy = True

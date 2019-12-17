@@ -9,5 +9,6 @@ urlpatterns = [
     path('address', views.address, name='address'),
     path('select/address', views.select_address, name='select_address'),
     path('establish/address/<int:pk>', views.check_address, name='check_address'),
-    path('confirm', views.confirm, name='confirm')
+    path('confirm', views.confirm, name='confirm'),
+    path('cancel', views.cancel, name='cancel')
 ]

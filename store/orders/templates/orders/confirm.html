@@ -34,17 +34,22 @@
             payment method
          </div>
          <div class="card-text">
-            card termination 555
+            card termination {{ order.billing_profile.last4 }}
          </div>
       </div>
       <div class="col-4">
           <div class="font-weight-bold">
             Promotional code
           </div>
-          <form >
+          <form id="procomode-form" action="{% url 'promo_codes:validate' %}">
               {% csrf_token %}
               <input type="text" name="code" value="" class="form-control" placeholder="promotional code">
           </form>
+          <div class="text-success" id="promocode-success" style="font-size-14px">
+            {% if order.promo_code %}
+              code applied successfully
+            {% endif %}
+          </div>
       </div>
     </div>
   </div>
@@ -67,4 +72,43 @@
         <a href="{% url 'orders:cancel' %}" class="btn btn-danger">to cancel an order</a>
       </div>
 </div>
+{% endblock %}
+
+{% block javascript %}
+  <script>
+    const form = document.getElementById('procomode-form')
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault()
+
+      const input = this.code
+      const code = input.value
+      const url = this.action + "?code=" + code
+      const div_total = document.getElementById('order-total')
+      const div_success = document.getElementById('promocode-success')
+
+      console.log(url)
+
+      fetch(url)
+        .then(response => response.json() )
+        .then(response => {
+
+          if(response.status === true){
+            //success
+            div_total.innerHTML = "$" + response.total
+
+            div_success.classList.remove('text-danger')
+            div_success.classList.add('text-success')
+
+            div_success.innerHTML = 'code applied successfully'
+
+          }else{
+            div_success.innerHTML = 'invalid code'
+            div_success.classList.remove('text-success')
+            div_success.classList.add('text-danger')
+          }
+        })
+      
+    })
+  </script>
 {% endblock %}

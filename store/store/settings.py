@@ -36,7 +36,9 @@ INSTALLED_APPS = [
     'orders',
     'shipping_addresses',
     'category',
+    'charges',
     'promo_codes',
+    'billing_profiles',
     'products',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -127,6 +129,9 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'jesbag.17@gmail.com'
 EMAIL_HOST_PASSWORD = 'J3sus200A' 
 EMAIL_USE_TLS = True 
+
+STRIPE_PUBLIC_KEY = 'pk_test_PcvZ4xQhmEgrlGwUwQSVqHEo00aifR0C5R'
+STRIPE_PRIVATE_KEY = 'sk_test_jg1TXwiva02AopRcFeFZg0bA00PpNGITr3'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
